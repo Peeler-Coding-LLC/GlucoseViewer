@@ -10,7 +10,11 @@ import SwiftUI
 struct BGLabelView: View {
     @Binding var bglabel : BGLabel
     var body: some View {
-        Text(bglabel.combined)
+        if(bglabel.hasError){
+            Text("Error")
+        } else {
+            Text(bglabel.combined)
+        }
     }
 }
 

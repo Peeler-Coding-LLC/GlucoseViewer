@@ -11,6 +11,7 @@ struct BGLabel {
     var glucose: Int = 0
     var direction: BGDirection = BGDirection.Flat
     var delta: Int = 0
+    var hasError: Bool = false
     
     var combined : String {
         get {
