@@ -12,28 +12,36 @@ import Charts
 struct GlucoseDetailsView: View {
     @Environment(\.openURL) private  var opener
     @Binding var baseUrl: String
+    @Binding var token: String
     @ObservedObject var bgData: BGData;
     @State private var action: Int? = 1
-    
+    @State private var showModal = false
     var body: some View {
+         
         
-        let yAxisValues: [Int] = stride(from: bgData.minBG-10, to:bgData.maxBG+20,by: 10).map {$0}
                   VStack {
-                    GroupBox ( "Glucose") {
-                        Chart (bgData.bgs.reversed()) {
-                            LineMark(
-                                x: .value("Time", $0.formattedDate),
-                                y: .value("Glucose", $0.glucose)
-                            ).symbol(.circle)
-                        }.chartYAxis{
-                            AxisMarks(values: yAxisValues)
-                        }.chartYScale(domain: ClosedRange(uncheckedBounds: (lower: yAxisValues.min()!, upper: yAxisValues.max()!))).frame(minWidth: 600)
-                        
-                    }
-                    
+                      if(bgData.hasData){
+                          let yAxisValues: [Int] = stride(from: bgData.minBG-10, to:bgData.maxBG+20,by: 10).map {$0}
+                         
+                          GroupBox ( "Glucose") {
+                              
+                              Chart (bgData.bgs.reversed()) {
+                                  LineMark(
+                                    x: .value("Time", $0.formattedDate),
+                                    y: .value("Glucose", $0.glucose)
+                                  ).symbol(.circle).alignsMarkStylesWithPlotArea()
+                              }.chartYAxis{
+                                  AxisMarks(values: yAxisValues)
+                              }.chartYScale(domain: ClosedRange(uncheckedBounds: (lower: yAxisValues.min()!, upper: yAxisValues.max()!)))
+                               .frame(minWidth: 700)
+                               
+                          
+                              
+                          }
+                      }
                     HStack(alignment: .bottom) {
                         Button("Settings"){
-                           print("ugh")
+                           showModal = true
                         }
                         
                         Button("Open Nightscout"){
@@ -43,7 +51,13 @@ struct GlucoseDetailsView: View {
                             NSApplication.shared.terminate(nil)
                         }.scaledToFill()
                     }.padding()
-                }.frame(maxWidth: .infinity,maxHeight: .infinity).opacity(100)
+                  }.frame(maxWidth: .infinity,maxHeight: .infinity).opacity(100)
+            .sheet(isPresented: $showModal,onDismiss:{
+                    print(baseUrl)
+            }
+            ){
+                            SettingsView(url: $baseUrl, token: $token)
+                        }
           
     }
 
@@ -82,10 +96,10 @@ struct GlucoseDetailsView_Previews: PreviewProvider {
     .add(BGDatum(glucose:150,datetime:1673736077000))
     .add(BGDatum(glucose:145,datetime:1673735777000))
     .add(BGDatum(glucose:138,datetime:1673735476000))
-
+    @State static var token = ""
     @State static var baseUrl = ""
     static var previews: some View {
-        GlucoseDetailsView(baseUrl: $baseUrl, bgData: bgs)
+        GlucoseDetailsView(baseUrl: $baseUrl, token: $token, bgData: bgs)
     }
 }
 
@@ -115,8 +129,10 @@ struct BGDatum: Identifiable {
     var formattedDate:String {
         get {
             let formatter1:DateFormatter = DateFormatter();
-            formatter1.dateStyle = DateFormatter.Style.short;
-            formatter1.timeStyle = DateFormatter.Style.short;
+            formatter1.pmSymbol = ""
+            formatter1.amSymbol = ""
+            formatter1.dateStyle = .none
+            formatter1.timeStyle = .short
             return formatter1.string(from: datetime)
         }
     }
@@ -124,6 +140,7 @@ struct BGDatum: Identifiable {
 
 class BGData :ObservableObject {
     @Published var bgs: [BGDatum]
+    var hasData:Bool = false
     
     var minBG: Int {
         get {
@@ -139,6 +156,7 @@ class BGData :ObservableObject {
     
     init(){
         self.bgs = []
+        self.hasData = false
     }
     
     convenience init(with bgs:[APIBgs]){
@@ -153,10 +171,12 @@ class BGData :ObservableObject {
             let d = Date(timeIntervalSince1970: Double(bg.datetime/1000))
             self.bgs.append(BGDatum(glucose: g, datetime: d))
         }
+        self.hasData = !bgs.isEmpty
     }
     
     func add(_ bg: BGDatum) -> BGData{
         self.bgs.append(bg)
+        self.hasData = true
         return self
     }
     

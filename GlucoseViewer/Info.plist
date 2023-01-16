@@ -8,11 +8,13 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>glucoseview</string>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>glucoseviewer</string>
-			</array>
+			<array/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 		</dict>
 	</array>
 </dict>
