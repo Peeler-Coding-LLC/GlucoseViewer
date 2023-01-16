@@ -10,7 +10,9 @@ import SwiftUI
 struct BGLabelView: View {
     @Binding var bglabel : BGLabel
     var body: some View {
-        if(bglabel.hasError){
+        if(bglabel.status == .NoUrl){
+            Text("Set URL")
+        } else if(bglabel.status == .Error){
             Text("Error")
         } else {
             Text(bglabel.combined)

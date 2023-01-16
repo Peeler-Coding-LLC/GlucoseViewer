@@ -11,7 +11,12 @@ struct BGLabel {
     var glucose: Int = 0
     var direction: BGDirection = BGDirection.Flat
     var delta: Int = 0
-    var hasError: Bool = false
+    var status : Status = .Ok
+    var hasError: Bool {
+        get {
+            return self.status != .Ok
+        }
+    }
     
     var combined : String {
         get {
@@ -45,4 +50,11 @@ struct BGLabel {
             }
         }
     }
+    
+    enum Status {
+        case NoUrl
+        case Error
+        case Ok
+    }
+    
 }
