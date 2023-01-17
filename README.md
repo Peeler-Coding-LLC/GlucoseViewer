@@ -9,3 +9,7 @@ Displays current glucose, trend arrow, and delta on the toolbar. Clicking on the
 > __Note__
 >
 > **${\color{red}Requires \space a \space nightscout \space instance}$**
+
+<br><br>
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I0HXC2A)
