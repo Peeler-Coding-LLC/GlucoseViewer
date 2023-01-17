@@ -17,50 +17,50 @@ struct GlucoseDetailsView: View {
     @State private var action: Int? = 1
     @State private var showModal = false
     var body: some View {
-         
         
-                  VStack {
-                      if(bgData.hasData){
-                          let yAxisValues: [Int] = stride(from: bgData.minBG-10, to:bgData.maxBG+20,by: 10).map {$0}
-                         
-                          GroupBox ( "Glucose") {
-                              
-                              Chart (bgData.bgs.reversed()) {
-                                  LineMark(
-                                    x: .value("Time", $0.formattedDate),
-                                    y: .value("Glucose", $0.glucose)
-                                  ).symbol(.circle).alignsMarkStylesWithPlotArea()
-                              }.chartYAxis{
-                                  AxisMarks(values: yAxisValues)
-                              }.chartYScale(domain: ClosedRange(uncheckedBounds: (lower: yAxisValues.min()!, upper: yAxisValues.max()!)))
-                               .frame(minWidth: 700)
-                               
-                          
-                              
-                          }
-                      }
-                    HStack(alignment: .bottom) {
-                        Button("Settings"){
-                           showModal = true
-                        }
-                        
-                        Button("Open Nightscout"){
-                            self.openURL(self.baseUrl)
-                        }.scaledToFill()
-                        Button("Quit"){
-                            NSApplication.shared.terminate(nil)
-                        }.scaledToFill()
-                    }.padding()
-                  }.frame(maxWidth: .infinity,maxHeight: .infinity).opacity(100)
+        
+        VStack {
+            if(bgData.hasData){
+                let yAxisValues: [Int] = stride(from: bgData.minBG-10, to:bgData.maxBG+20,by: 10).map {$0}
+                
+                GroupBox ( "Glucose") {
+                    
+                    Chart (bgData.bgs.reversed()) {
+                        LineMark(
+                            x: .value("Time", $0.formattedDate),
+                            y: .value("Glucose", $0.glucose)
+                        ).symbol(.circle).alignsMarkStylesWithPlotArea()
+                    }.chartYAxis{
+                        AxisMarks(values: yAxisValues)
+                    }.chartYScale(domain: ClosedRange(uncheckedBounds: (lower: yAxisValues.min()!, upper: yAxisValues.max()!)))
+                        .frame(minWidth: 700)
+                    
+                    
+                    
+                }
+            }
+            HStack(alignment: .bottom) {
+                Button("Settings"){
+                    showModal = true
+                }
+                
+                Button("Open Nightscout"){
+                    self.openURL(self.baseUrl)
+                }.scaledToFill()
+                Button("Quit"){
+                    NSApplication.shared.terminate(nil)
+                }.scaledToFill()
+            }.padding()
+        }.frame(maxWidth: .infinity,maxHeight: .infinity).opacity(100)
             .sheet(isPresented: $showModal,onDismiss:{
-                    print(baseUrl)
+                print(baseUrl)
             }
             ){
-                            SettingsView(url: $baseUrl, token: $token)
-                        }
-          
+                SettingsView(url: $baseUrl, token: $token)
+            }.opacity(0.99)
+        
     }
-
+    
     func openURL(_ url:String){
         if let u = URL(string: url) {
             self.openURL(u)
@@ -77,25 +77,25 @@ struct GlucoseDetailsView: View {
 struct GlucoseDetailsView_Previews: PreviewProvider {
     @StateObject static var bgs =
     BGData().add(BGDatum(glucose:138,datetime:1673741177000))
-    .add(BGDatum(glucose:141,datetime:1673740877000))
-    .add(BGDatum(glucose:145,datetime:1673740577000))
-    .add(BGDatum(glucose:149,datetime:1673740277000))
-    .add(BGDatum(glucose:151,datetime:1673739977000))
-    .add(BGDatum(glucose:153,datetime:1673739677000))
-    .add(BGDatum(glucose:157,datetime:1673739377000))
-    .add(BGDatum(glucose:163,datetime:1673739076000))
-    .add(BGDatum(glucose:168,datetime:1673738777000))
-    .add(BGDatum(glucose:171,datetime:1673738477000))
-    .add(BGDatum(glucose:172,datetime:1673738177000))
-    .add(BGDatum(glucose:167,datetime:1673737876000))
-    .add(BGDatum(glucose:161,datetime:1673737577000))
-    .add(BGDatum(glucose:157,datetime:1673737276000))
-    .add(BGDatum(glucose:158,datetime:1673736977000))
-    .add(BGDatum(glucose:158,datetime:1673736676000))
-    .add(BGDatum(glucose:156,datetime:1673736377000))
-    .add(BGDatum(glucose:150,datetime:1673736077000))
-    .add(BGDatum(glucose:145,datetime:1673735777000))
-    .add(BGDatum(glucose:138,datetime:1673735476000))
+        .add(BGDatum(glucose:141,datetime:1673740877000))
+        .add(BGDatum(glucose:145,datetime:1673740577000))
+        .add(BGDatum(glucose:149,datetime:1673740277000))
+        .add(BGDatum(glucose:151,datetime:1673739977000))
+        .add(BGDatum(glucose:153,datetime:1673739677000))
+        .add(BGDatum(glucose:157,datetime:1673739377000))
+        .add(BGDatum(glucose:163,datetime:1673739076000))
+        .add(BGDatum(glucose:168,datetime:1673738777000))
+        .add(BGDatum(glucose:171,datetime:1673738477000))
+        .add(BGDatum(glucose:172,datetime:1673738177000))
+        .add(BGDatum(glucose:167,datetime:1673737876000))
+        .add(BGDatum(glucose:161,datetime:1673737577000))
+        .add(BGDatum(glucose:157,datetime:1673737276000))
+        .add(BGDatum(glucose:158,datetime:1673736977000))
+        .add(BGDatum(glucose:158,datetime:1673736676000))
+        .add(BGDatum(glucose:156,datetime:1673736377000))
+        .add(BGDatum(glucose:150,datetime:1673736077000))
+        .add(BGDatum(glucose:145,datetime:1673735777000))
+        .add(BGDatum(glucose:138,datetime:1673735476000))
     @State static var token = ""
     @State static var baseUrl = ""
     static var previews: some View {
@@ -125,7 +125,7 @@ struct BGDatum: Identifiable {
         }
         self.init(glucose: glucose, datetime: Date(timeIntervalSince1970: Double(d)))
     }
-        
+    
     var formattedDate:String {
         get {
             let formatter1:DateFormatter = DateFormatter();
