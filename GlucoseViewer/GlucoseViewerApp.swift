@@ -92,7 +92,7 @@ struct APIBgs : Codable {
     var sgv: String
     var trend: Int
     var direction: String
-    var datetime: Int
+    var datetime: Double
     var bgdelta: Int?
 }
 

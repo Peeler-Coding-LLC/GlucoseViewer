@@ -118,12 +118,13 @@ struct BGDatum: Identifiable {
         self.datetime = datetime
     }
     
-    init(glucose: Int, datetime:Int){
+    init(glucose: Int, datetime:Double){
         var d = datetime
-        if(d > 9999999999){
-            d = d/1000
+               
+        if(d > 9999999999.0){
+            d = d/1000.0
         }
-        self.init(glucose: glucose, datetime: Date(timeIntervalSince1970: Double(d)))
+        self.init(glucose: glucose, datetime: Date(timeIntervalSince1970: d))
     }
     
     var formattedDate:String {
@@ -168,8 +169,11 @@ class BGData :ObservableObject {
         self.bgs = []
         bgs.forEach(){ bg in
             let g = Int(bg.sgv)!
-            let d = Date(timeIntervalSince1970: Double(bg.datetime/1000))
-            self.bgs.append(BGDatum(glucose: g, datetime: d))
+            var d = bg.datetime
+            if(d > 9999999999.0){
+                d = d/1000.0
+            }
+            self.bgs.append(BGDatum(glucose: g, datetime: Date(timeIntervalSince1970: d)))
         }
         self.hasData = !bgs.isEmpty
     }
