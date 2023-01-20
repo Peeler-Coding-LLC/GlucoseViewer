@@ -21,7 +21,7 @@ struct BGLabelView: View {
 }
 
 struct BGLabelView_Previews: PreviewProvider {
-    @State static var bg = BGLabel(glucose: 100, direction: .Flat, delta: 2)
+    @State static var bg = BGLabel(glucose: "101", direction: .Flat, delta: 2)
     static var previews: some View {
         BGLabelView(bglabel: $bg)
     }
