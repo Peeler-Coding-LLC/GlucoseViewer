@@ -10,6 +10,11 @@
 		AB1292DC2972064F00C7615F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1292DB2972064F00C7615F /* SettingsView.swift */; };
 		AB1292DF29732B9600C7615F /* GlucoseDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1292DE29732B9600C7615F /* GlucoseDetailsView.swift */; };
 		AB1292E12976155B00C7615F /* GlucoseViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1292E02976155B00C7615F /* GlucoseViewerApp.swift */; };
+		AB1292E92977BB2A00C7615F /* GlucoseViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1292E82977BB2A00C7615F /* GlucoseViewerTests.swift */; };
+		AB71105C2979F68000AD071E /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71105B2979F68000AD071E /* NightscoutAPI.swift */; };
+		AB71105E297A085000AD071E /* NightscoutAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71105D297A085000AD071E /* NightscoutAPITests.swift */; };
+		AB711060297A2B8200AD071E /* invalidjson.json in Resources */ = {isa = PBXBuildFile; fileRef = AB71105F297A2B8200AD071E /* invalidjson.json */; };
+		AB711062297A2DA700AD071E /* validjson.json in Resources */ = {isa = PBXBuildFile; fileRef = AB711061297A2DA700AD071E /* validjson.json */; };
 		ABED20CC296E5C8C00647363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABED20CB296E5C8C00647363 /* Assets.xcassets */; };
 		ABED20CF296E5C8C00647363 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABED20CE296E5C8C00647363 /* Preview Assets.xcassets */; };
 		ABED20D9296F7C0F00647363 /* BGLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED20D8296F7C0F00647363 /* BGLabelView.swift */; };
@@ -17,10 +22,26 @@
 		ABED20DD296F7E2B00647363 /* BGDirectionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED20DC296F7E2B00647363 /* BGDirectionEnum.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AB1292EA2977BB2A00C7615F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABED20BC296E5C8B00647363 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABED20C3296E5C8B00647363;
+			remoteInfo = GlucoseViewer;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		AB1292DB2972064F00C7615F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AB1292DE29732B9600C7615F /* GlucoseDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseDetailsView.swift; sourceTree = "<group>"; };
 		AB1292E02976155B00C7615F /* GlucoseViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseViewerApp.swift; sourceTree = "<group>"; };
+		AB1292E62977BB2A00C7615F /* GlucoseViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlucoseViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB1292E82977BB2A00C7615F /* GlucoseViewerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseViewerTests.swift; sourceTree = "<group>"; };
+		AB71105B2979F68000AD071E /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
+		AB71105D297A085000AD071E /* NightscoutAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPITests.swift; sourceTree = "<group>"; };
+		AB71105F297A2B8200AD071E /* invalidjson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = invalidjson.json; sourceTree = "<group>"; };
+		AB711061297A2DA700AD071E /* validjson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = validjson.json; sourceTree = "<group>"; };
 		ABED20C4296E5C8B00647363 /* GlucoseViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlucoseViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABED20CB296E5C8C00647363 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABED20CE296E5C8C00647363 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -31,6 +52,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AB1292E32977BB2A00C7615F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABED20C1296E5C8B00647363 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -41,10 +69,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB1292E72977BB2A00C7615F /* GlucoseViewerTests */ = {
+			isa = PBXGroup;
+			children = (
+				AB1292E82977BB2A00C7615F /* GlucoseViewerTests.swift */,
+				AB71105D297A085000AD071E /* NightscoutAPITests.swift */,
+				AB71105F297A2B8200AD071E /* invalidjson.json */,
+				AB711061297A2DA700AD071E /* validjson.json */,
+			);
+			path = GlucoseViewerTests;
+			sourceTree = "<group>";
+		};
 		ABED20BB296E5C8B00647363 = {
 			isa = PBXGroup;
 			children = (
 				ABED20C6296E5C8B00647363 /* GlucoseViewer */,
+				AB1292E72977BB2A00C7615F /* GlucoseViewerTests */,
 				ABED20C5296E5C8B00647363 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				ABED20C4296E5C8B00647363 /* GlucoseViewer.app */,
+				AB1292E62977BB2A00C7615F /* GlucoseViewerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,6 +110,7 @@
 				AB1292DB2972064F00C7615F /* SettingsView.swift */,
 				AB1292DE29732B9600C7615F /* GlucoseDetailsView.swift */,
 				AB1292E02976155B00C7615F /* GlucoseViewerApp.swift */,
+				AB71105B2979F68000AD071E /* NightscoutAPI.swift */,
 			);
 			path = GlucoseViewer;
 			sourceTree = "<group>";
@@ -84,6 +126,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AB1292E52977BB2A00C7615F /* GlucoseViewerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB1292EC2977BB2A00C7615F /* Build configuration list for PBXNativeTarget "GlucoseViewerTests" */;
+			buildPhases = (
+				AB1292E22977BB2A00C7615F /* Sources */,
+				AB1292E32977BB2A00C7615F /* Frameworks */,
+				AB1292E42977BB2A00C7615F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AB1292EB2977BB2A00C7615F /* PBXTargetDependency */,
+			);
+			name = GlucoseViewerTests;
+			productName = GlucoseViewerTests;
+			productReference = AB1292E62977BB2A00C7615F /* GlucoseViewerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		ABED20C3296E5C8B00647363 /* GlucoseViewer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABED20D3296E5C8C00647363 /* Build configuration list for PBXNativeTarget "GlucoseViewer" */;
@@ -112,6 +172,10 @@
 				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = "Peeler Coding, LLC";
 				TargetAttributes = {
+					AB1292E52977BB2A00C7615F = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = ABED20C3296E5C8B00647363;
+					};
 					ABED20C3296E5C8B00647363 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -131,11 +195,21 @@
 			projectRoot = "";
 			targets = (
 				ABED20C3296E5C8B00647363 /* GlucoseViewer */,
+				AB1292E52977BB2A00C7615F /* GlucoseViewerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AB1292E42977BB2A00C7615F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB711062297A2DA700AD071E /* validjson.json in Resources */,
+				AB711060297A2B8200AD071E /* invalidjson.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABED20C2296E5C8B00647363 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -148,6 +222,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AB1292E22977BB2A00C7615F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB71105E297A085000AD071E /* NightscoutAPITests.swift in Sources */,
+				AB1292E92977BB2A00C7615F /* GlucoseViewerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABED20C0296E5C8B00647363 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,6 +239,7 @@
 				ABED20DB296F7DF400647363 /* BGReading.swift in Sources */,
 				ABED20DD296F7E2B00647363 /* BGDirectionEnum.swift in Sources */,
 				AB1292DC2972064F00C7615F /* SettingsView.swift in Sources */,
+				AB71105C2979F68000AD071E /* NightscoutAPI.swift in Sources */,
 				ABED20D9296F7C0F00647363 /* BGLabelView.swift in Sources */,
 				AB1292DF29732B9600C7615F /* GlucoseDetailsView.swift in Sources */,
 			);
@@ -163,7 +247,52 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AB1292EB2977BB2A00C7615F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABED20C3296E5C8B00647363 /* GlucoseViewer */;
+			targetProxy = AB1292EA2977BB2A00C7615F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		AB1292ED2977BB2A00C7615F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = EKBKRDG4Q9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peelercoding.GlucoseViewerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoseViewer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlucoseViewer";
+			};
+			name = Debug;
+		};
+		AB1292EE2977BB2A00C7615F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = EKBKRDG4Q9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peelercoding.GlucoseViewerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoseViewer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlucoseViewer";
+			};
+			name = Release;
+		};
 		ABED20D1296E5C8C00647363 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -288,7 +417,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "2201171944-alpha";
+				CURRENT_PROJECT_VERSION = "2201172012-alpha";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = EKBKRDG4Q9;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -323,7 +452,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "2201171944-alpha";
+				CURRENT_PROJECT_VERSION = "2201172012-alpha";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = EKBKRDG4Q9;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -351,6 +480,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AB1292EC2977BB2A00C7615F /* Build configuration list for PBXNativeTarget "GlucoseViewerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB1292ED2977BB2A00C7615F /* Debug */,
+				AB1292EE2977BB2A00C7615F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ABED20BF296E5C8B00647363 /* Build configuration list for PBXProject "GlucoseViewer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

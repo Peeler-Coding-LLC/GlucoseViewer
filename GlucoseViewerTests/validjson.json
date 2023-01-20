@@ -1,0 +1,37 @@
+{
+    "status":
+    [
+        {
+            "now":1674180158028
+            
+        }
+    ],
+    "bgs":
+    [
+        {
+            "sgv":"121",
+            "trend":4,
+            "direction":"Flat",
+            "datetime":1674180095000,
+            "bgdelta":4
+            
+        },
+        {
+            "sgv":"117",
+            "trend":4,
+            "direction":"Flat",
+            "datetime":1674179795000
+            
+        },
+        {
+            "sgv":"108",
+            "trend":4,
+            "direction":"Flat",
+            "datetime":1674179495000
+            
+        }
+    ],
+    "cals":
+    [
+    ]
+}
