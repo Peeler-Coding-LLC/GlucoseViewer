@@ -13,14 +13,13 @@ import SwiftUI
 @main
 struct GlucoseViewerApp: App {
     @State var bg:BGLabel = BGLabel(status: .Ok)
-    @AppStorage("url") private var baseUrl : String = ""
-    @AppStorage("token") private var token : String = ""
+    @AppStorage("settings") private var settings = GlucoseViewerSettings()
     @StateObject var bgs: BGData = BGData()
     private var api = NightscoutAPI()
     
     var body: some Scene {
         MenuBarExtra(content:{
-            GlucoseDetailsView(baseUrl: $baseUrl, token: $token, bgData: bgs).frame(maxWidth: .infinity)
+            GlucoseDetailsView(settings:$settings, bgData: bgs).frame(maxWidth: .infinity)
         }, label: {
             BGLabelView(bglabel: $bg).task{ await self.loadData()}
         }).menuBarExtraStyle(.window).windowStyle(.hiddenTitleBar)
@@ -28,9 +27,11 @@ struct GlucoseViewerApp: App {
     
     ///  triggers API call and loads data
     func loadData() async {
+        print(self.settings.rawValue)
+        
         var interval = 15.0
         do {
-            let r = try await api.loadData(self.baseUrl,token: self.token)
+            let r = try await api.loadData(self.settings.url,token: self.settings.token)
             self.bg.direction = BGDirection(rawValue: r.bgs[0].direction)!
             self.bg.glucose = Int(r.bgs[0].sgv)!
             self.bg.delta = r.bgs[0].bgdelta!
@@ -56,6 +57,8 @@ struct GlucoseViewerApp: App {
     }
     
 }
+
+
 
 
 

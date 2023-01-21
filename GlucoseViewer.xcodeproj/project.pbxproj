@@ -15,10 +15,13 @@
 		AB71105E297A085000AD071E /* NightscoutAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71105D297A085000AD071E /* NightscoutAPITests.swift */; };
 		AB711060297A2B8200AD071E /* invalidjson.json in Resources */ = {isa = PBXBuildFile; fileRef = AB71105F297A2B8200AD071E /* invalidjson.json */; };
 		AB711062297A2DA700AD071E /* validjson.json in Resources */ = {isa = PBXBuildFile; fileRef = AB711061297A2DA700AD071E /* validjson.json */; };
+		AB711064297B7FF900AD071E /* stringdelta.json in Resources */ = {isa = PBXBuildFile; fileRef = AB711063297B7FF900AD071E /* stringdelta.json */; };
+		AB711066297B8C9300AD071E /* GlucoseViewerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB711065297B8C9300AD071E /* GlucoseViewerSettings.swift */; };
+		AB711068297B900500AD071E /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = AB711067297B900500AD071E /* settings.json */; };
 		ABED20CC296E5C8C00647363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABED20CB296E5C8C00647363 /* Assets.xcassets */; };
 		ABED20CF296E5C8C00647363 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABED20CE296E5C8C00647363 /* Preview Assets.xcassets */; };
 		ABED20D9296F7C0F00647363 /* BGLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED20D8296F7C0F00647363 /* BGLabelView.swift */; };
-		ABED20DB296F7DF400647363 /* BGReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED20DA296F7DF400647363 /* BGReading.swift */; };
+		ABED20DB296F7DF400647363 /* BGLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED20DA296F7DF400647363 /* BGLabel.swift */; };
 		ABED20DD296F7E2B00647363 /* BGDirectionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED20DC296F7E2B00647363 /* BGDirectionEnum.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,12 +45,15 @@
 		AB71105D297A085000AD071E /* NightscoutAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPITests.swift; sourceTree = "<group>"; };
 		AB71105F297A2B8200AD071E /* invalidjson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = invalidjson.json; sourceTree = "<group>"; };
 		AB711061297A2DA700AD071E /* validjson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = validjson.json; sourceTree = "<group>"; };
+		AB711063297B7FF900AD071E /* stringdelta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stringdelta.json; sourceTree = "<group>"; };
+		AB711065297B8C9300AD071E /* GlucoseViewerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseViewerSettings.swift; sourceTree = "<group>"; };
+		AB711067297B900500AD071E /* settings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = settings.json; sourceTree = "<group>"; };
 		ABED20C4296E5C8B00647363 /* GlucoseViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlucoseViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABED20CB296E5C8C00647363 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABED20CE296E5C8C00647363 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ABED20D0296E5C8C00647363 /* GlucoseViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GlucoseViewer.entitlements; sourceTree = "<group>"; };
 		ABED20D8296F7C0F00647363 /* BGLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGLabelView.swift; sourceTree = "<group>"; };
-		ABED20DA296F7DF400647363 /* BGReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGReading.swift; sourceTree = "<group>"; };
+		ABED20DA296F7DF400647363 /* BGLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGLabel.swift; sourceTree = "<group>"; };
 		ABED20DC296F7E2B00647363 /* BGDirectionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGDirectionEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +82,8 @@
 				AB71105D297A085000AD071E /* NightscoutAPITests.swift */,
 				AB71105F297A2B8200AD071E /* invalidjson.json */,
 				AB711061297A2DA700AD071E /* validjson.json */,
+				AB711063297B7FF900AD071E /* stringdelta.json */,
+				AB711067297B900500AD071E /* settings.json */,
 			);
 			path = GlucoseViewerTests;
 			sourceTree = "<group>";
@@ -105,12 +113,13 @@
 				ABED20D0296E5C8C00647363 /* GlucoseViewer.entitlements */,
 				ABED20CD296E5C8C00647363 /* Preview Content */,
 				ABED20D8296F7C0F00647363 /* BGLabelView.swift */,
-				ABED20DA296F7DF400647363 /* BGReading.swift */,
+				ABED20DA296F7DF400647363 /* BGLabel.swift */,
 				ABED20DC296F7E2B00647363 /* BGDirectionEnum.swift */,
 				AB1292DB2972064F00C7615F /* SettingsView.swift */,
 				AB1292DE29732B9600C7615F /* GlucoseDetailsView.swift */,
 				AB1292E02976155B00C7615F /* GlucoseViewerApp.swift */,
 				AB71105B2979F68000AD071E /* NightscoutAPI.swift */,
+				AB711065297B8C9300AD071E /* GlucoseViewerSettings.swift */,
 			);
 			path = GlucoseViewer;
 			sourceTree = "<group>";
@@ -207,6 +216,8 @@
 			files = (
 				AB711062297A2DA700AD071E /* validjson.json in Resources */,
 				AB711060297A2B8200AD071E /* invalidjson.json in Resources */,
+				AB711068297B900500AD071E /* settings.json in Resources */,
+				AB711064297B7FF900AD071E /* stringdelta.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,8 +247,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB1292E12976155B00C7615F /* GlucoseViewerApp.swift in Sources */,
-				ABED20DB296F7DF400647363 /* BGReading.swift in Sources */,
+				ABED20DB296F7DF400647363 /* BGLabel.swift in Sources */,
 				ABED20DD296F7E2B00647363 /* BGDirectionEnum.swift in Sources */,
+				AB711066297B8C9300AD071E /* GlucoseViewerSettings.swift in Sources */,
 				AB1292DC2972064F00C7615F /* SettingsView.swift in Sources */,
 				AB71105C2979F68000AD071E /* NightscoutAPI.swift in Sources */,
 				ABED20D9296F7C0F00647363 /* BGLabelView.swift in Sources */,

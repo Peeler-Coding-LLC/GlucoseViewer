@@ -12,41 +12,35 @@ import Combine
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentation
     
-    @Binding var url : String
-    @Binding var token: String
-    
-    @State var originalUrl: String
-    @State var originalToken: String
+    @Binding var settings :GlucoseViewerSettings
+    @State var originalSettings:GlucoseViewerSettings
+//    @State var originalUrl: String
+//    @State var originalToken: String
+//    @State var originalUnits: GlucoseViewerSettings.Units
+//    @State var originalAxis: GlucoseViewerSettings.GraphAxis
     let userDefaults = UserDefaults.standard
     
 
     
-    init(url: Binding<String>, token: Binding<String>){
-        self._url = url
-        self._token = token
-        
-        self._originalUrl = State(initialValue: url.wrappedValue)
-        self._originalToken = State(initialValue: token.wrappedValue)
+    init(settings:Binding<GlucoseViewerSettings>){
+        self._settings = settings
+        self._originalSettings = State(initialValue: settings.wrappedValue)
     }
     
     var body: some View {
         VStack {
             Text("Glucose Toolbar Viewer Settings").font(.title)
             Form {
-                TextField("Nightscout URL",text: $originalUrl)
-                TextField("API Token",text: $originalToken)
+                TextField("Nightscout URL",text: $originalSettings.url)
+                TextField("API Token",text: $originalSettings.token)
                 HStack {
                     Button("Save") {
-                        self.url = self.originalUrl
-                        self.token = self.originalToken
-                        userDefaults.set(self.url, forKey: "url")
-                        userDefaults.set(self.token, forKey:"token")
-                        
+                        self.settings = self.originalSettings
+                        print(self.settings.rawValue)
+                        userDefaults.set(self.settings.rawValue, forKey: "settings")
                         self.presentation.wrappedValue.dismiss()
                     }
                     Button("Cancel"){
- //                       self.url = self.originalUrl
-   //                     self.token = self.originalToken
                         self.presentation.wrappedValue.dismiss()
                     }
                 }.frame(maxWidth: .infinity, alignment: .trailing)
@@ -56,9 +50,8 @@ struct SettingsView: View {
 }
 
 struct EnterUrlView_Previews: PreviewProvider {
-    @State static var b = ""
-    @State static var u = "d"
+    @State static var settings = GlucoseViewerSettings()
     static var previews: some View {
-        SettingsView(url: $u, token: $b)
+        SettingsView(settings: $settings)
     }
 }

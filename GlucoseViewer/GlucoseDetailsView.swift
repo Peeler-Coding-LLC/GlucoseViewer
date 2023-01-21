@@ -11,8 +11,9 @@ import Charts
 
 struct GlucoseDetailsView: View {
     @Environment(\.openURL) private  var opener
-    @Binding var baseUrl: String
-    @Binding var token: String
+//    @Binding var baseUrl: String
+//    @Binding var token: String
+    @Binding var settings:GlucoseViewerSettings
     @ObservedObject var bgData: BGData;
     @State private var action: Int? = 1
     @State private var showModal = false
@@ -45,7 +46,7 @@ struct GlucoseDetailsView: View {
                 }
                 
                 Button("Open Nightscout"){
-                    self.openURL(self.baseUrl)
+                    self.openURL(self.settings.url)
                 }.scaledToFill()
                 Button("Quit"){
                     NSApplication.shared.terminate(nil)
@@ -53,10 +54,10 @@ struct GlucoseDetailsView: View {
             }.padding()
         }.frame(maxWidth: .infinity,maxHeight: .infinity).opacity(100)
             .sheet(isPresented: $showModal,onDismiss:{
-                print(baseUrl)
+                print(settings.url)
             }
             ){
-                SettingsView(url: $baseUrl, token: $token)
+                SettingsView(settings: $settings)
             }.opacity(0.99)
         
     }
@@ -96,10 +97,9 @@ struct GlucoseDetailsView_Previews: PreviewProvider {
         .add(BGDatum(glucose:150,datetime:1673736077000))
         .add(BGDatum(glucose:145,datetime:1673735777000))
         .add(BGDatum(glucose:138,datetime:1673735476000))
-    @State static var token = ""
-    @State static var baseUrl = ""
+    @State static var settings = GlucoseViewerSettings()
     static var previews: some View {
-        GlucoseDetailsView(baseUrl: $baseUrl, token: $token, bgData: bgs)
+        GlucoseDetailsView(settings:$settings, bgData: bgs)
     }
 }
 
