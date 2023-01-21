@@ -21,19 +21,38 @@ struct GlucoseViewerApp: App {
         MenuBarExtra(content:{
             GlucoseDetailsView(settings:$settings, bgData: bgs).frame(maxWidth: .infinity)
         }, label: {
-            BGLabelView(bglabel: $bg).task{ await self.loadData()}
+            
+            BGLabelView(bglabel: $bg).task{
+                //url and token were originally stored as their own values
+                //but were moved to the settings struct which is stored directly
+                //the following checks if the old storage still exists, and if it does, it will
+                //copy that value to the new storage and then delete the old key
+                if let url = UserDefaults.standard.string(forKey: "url") {
+                    settings.url = url
+                    UserDefaults.standard.removeObject(forKey: "url")
+                }
+
+                if let token = UserDefaults.standard.string(forKey: "token"){
+                    settings.token = token
+                    UserDefaults.standard.removeObject(forKey: "token")
+                }
+                
+                await self.loadData()
+  
+            }
+            
         }).menuBarExtraStyle(.window).windowStyle(.hiddenTitleBar)
     }
     
     ///  triggers API call and loads data
     func loadData() async {
-        print(self.settings.rawValue)
+        
         
         var interval = 15.0
         do {
             let r = try await api.loadData(self.settings.url,token: self.settings.token)
             self.bg.direction = BGDirection(rawValue: r.bgs[0].direction)!
-            self.bg.glucose = Int(r.bgs[0].sgv)!
+            self.bg.glucose = r.bgs[0].sgv
             self.bg.delta = r.bgs[0].bgdelta!
             self.bgs.replace(with: r.bgs)
             self.bg.status = .Ok

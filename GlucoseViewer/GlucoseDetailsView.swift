@@ -9,10 +9,39 @@
 import SwiftUI
 import Charts
 
+struct AxisValues {
+    var values: [Double]
+    
+    init(with values: BGData, using settings: GlucoseViewerSettings){
+        self.values = []
+        switch settings.axisStyle {
+        case .fixed:
+            switch settings.units {
+            case .mgdL:
+                self.values = stride(from: 50, to:300,by: 25).map {Double($0)}
+            case .mmolL:
+                self.values = stride(from: 2.8, to:16.6,by: 0.60).map {$0}
+            }
+        case .dynamic:
+            switch settings.units {
+            case .mgdL:
+                self.values = stride(from: values.minBG.int-10, to:values.maxBG.int+20,by: 10).map {Double($0)}
+            case .mmolL:
+                self.values = stride(from: values.minBG.double-1.0, to:values.maxBG.double+1.5,by: 0.5).map {$0}
+            }
+        }
+        
+        self.values.sort()
+        
+        
+    }
+    
+}
+
 struct GlucoseDetailsView: View {
     @Environment(\.openURL) private  var opener
-//    @Binding var baseUrl: String
-//    @Binding var token: String
+    //    @Binding var baseUrl: String
+    //    @Binding var token: String
     @Binding var settings:GlucoseViewerSettings
     @ObservedObject var bgData: BGData;
     @State private var action: Int? = 1
@@ -22,19 +51,20 @@ struct GlucoseDetailsView: View {
         
         VStack {
             if(bgData.hasData){
-                let yAxisValues: [Int] = stride(from: bgData.minBG-10, to:bgData.maxBG+20,by: 10).map {$0}
-                
+                let yAxisValues = AxisValues(with: bgData, using: settings)
                 GroupBox ( "Glucose") {
                     
                     Chart (bgData.bgs.reversed()) {
                         LineMark(
                             x: .value("Time", $0.formattedDate),
-                            y: .value("Glucose", $0.glucose)
+                            y: .value("Glucose", $0.glucose.double)
                         ).symbol(.circle).alignsMarkStylesWithPlotArea()
                     }.chartYAxis{
-                        AxisMarks(values: yAxisValues)
-                    }.chartYScale(domain: ClosedRange(uncheckedBounds: (lower: yAxisValues.min()!, upper: yAxisValues.max()!)))
-                        .frame(minWidth: 700)
+                        AxisMarks(values: yAxisValues.values)
+                    }.chartYScale(domain: ClosedRange(uncheckedBounds: (
+                        lower: yAxisValues.values.min()!,
+                        upper: yAxisValues.values.max()!)))
+                    .frame(minWidth: 700)
                     
                     
                     
@@ -97,7 +127,28 @@ struct GlucoseDetailsView_Previews: PreviewProvider {
         .add(BGDatum(glucose:150,datetime:1673736077000))
         .add(BGDatum(glucose:145,datetime:1673735777000))
         .add(BGDatum(glucose:138,datetime:1673735476000))
-    @State static var settings = GlucoseViewerSettings()
+    //    BGData().add(BGDatum(glucose:4.0,datetime:1673741177000))
+    //        .add(BGDatum(glucose:4.5,datetime:1673740877000))
+    //        .add(BGDatum(glucose:4.6,datetime:1673740577000))
+    //        .add(BGDatum(glucose:4.7,datetime:1673740277000))
+    //        .add(BGDatum(glucose:4.1,datetime:1673739977000))
+    //        .add(BGDatum(glucose:4.0,datetime:1673739677000))
+    //        .add(BGDatum(glucose:4.0,datetime:1673739377000))
+    //        .add(BGDatum(glucose:4.2,datetime:1673739076000))
+    //        .add(BGDatum(glucose:4.5,datetime:1673738777000))
+    //        .add(BGDatum(glucose:4.0,datetime:1673738477000))
+    //        .add(BGDatum(glucose:4.5,datetime:1673738177000))
+    //        .add(BGDatum(glucose:4.5,datetime:1673737876000))
+    //        .add(BGDatum(glucose:4.6,datetime:1673737577000))
+    //        .add(BGDatum(glucose:5.1,datetime:1673737276000))
+    //        .add(BGDatum(glucose:4.5,datetime:1673736977000))
+    //        .add(BGDatum(glucose:5.6,datetime:1673736676000))
+    //        .add(BGDatum(glucose:4.7,datetime:1673736377000))
+    //        .add(BGDatum(glucose:6.9,datetime:1673736077000))
+    //        .add(BGDatum(glucose:4.5,datetime:1673735777000))
+    //        .add(BGDatum(glucose:4.5,datetime:1673735476000))
+    //
+    @State static var settings = GlucoseViewerSettings(units: .mgdL,axisStyle: .dynamic)
     static var previews: some View {
         GlucoseDetailsView(settings:$settings, bgData: bgs)
     }
@@ -110,17 +161,17 @@ struct BGDatum: Identifiable {
             return datetime
         }
     }
-    var glucose: Int
+    var glucose: StringableNumber
     var datetime: Date
     
-    init(glucose:Int,datetime:Date){
+    init(glucose:StringableNumber,datetime:Date){
         self.glucose = glucose
         self.datetime = datetime
     }
     
-    init(glucose: Int, datetime:Double){
+    init(glucose: StringableNumber, datetime:Double){
         var d = datetime
-               
+        
         if(d > 9999999999.0){
             d = d/1000.0
         }
@@ -143,13 +194,13 @@ class BGData :ObservableObject {
     @Published var bgs: [BGDatum]
     var hasData:Bool = false
     
-    var minBG: Int {
+    var minBG: StringableNumber {
         get {
             return bgs.min {$0.glucose < $1.glucose}!.glucose
         }
     }
     
-    var maxBG: Int {
+    var maxBG: StringableNumber {
         get {
             return bgs.max {$0.glucose < $1.glucose}!.glucose
         }
@@ -168,7 +219,7 @@ class BGData :ObservableObject {
     func replace(with bgs:[APIBgs]){
         self.bgs = []
         bgs.forEach(){ bg in
-            let g = Int(bg.sgv)!
+            let g = bg.sgv
             var d = bg.datetime
             if(d > 9999999999.0){
                 d = d/1000.0

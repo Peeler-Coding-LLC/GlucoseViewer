@@ -8,9 +8,9 @@
 import Foundation
 
 struct BGLabel {
-    var glucose: Int = 0
+    var glucose: StringableNumber = 0.0
     var direction: BGDirection = BGDirection.Flat
-    var delta: Int = 0
+    var delta: StringableNumber = 0.0
     var status : Status = .Ok
     var hasError: Bool {
         get {
@@ -20,13 +20,13 @@ struct BGLabel {
     
     var combined : String {
         get {
-            return String(glucose)+" "+directionArrow+" "+signedDelta
+            return glucose.string+" "+directionArrow+" "+signedDelta
         }
     }
     
     var signedDelta : String {
         get {
-            return (delta < 0 ? "" : "+")+String(delta)
+            return (delta.double < 0.0 ? "" : "+")+delta.string
         }
     }
     

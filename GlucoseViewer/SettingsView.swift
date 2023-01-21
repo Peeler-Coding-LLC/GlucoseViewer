@@ -14,10 +14,6 @@ struct SettingsView: View {
     
     @Binding var settings :GlucoseViewerSettings
     @State var originalSettings:GlucoseViewerSettings
-//    @State var originalUrl: String
-//    @State var originalToken: String
-//    @State var originalUnits: GlucoseViewerSettings.Units
-//    @State var originalAxis: GlucoseViewerSettings.GraphAxis
     let userDefaults = UserDefaults.standard
     
 
@@ -31,19 +27,40 @@ struct SettingsView: View {
         VStack {
             Text("Glucose Toolbar Viewer Settings").font(.title)
             Form {
-                TextField("Nightscout URL",text: $originalSettings.url)
-                TextField("API Token",text: $originalSettings.token)
-                HStack {
-                    Button("Save") {
-                        self.settings = self.originalSettings
-                        print(self.settings.rawValue)
-                        userDefaults.set(self.settings.rawValue, forKey: "settings")
-                        self.presentation.wrappedValue.dismiss()
+                VStack {
+                    TextField(text: $originalSettings.url) {
+                        Text("Nightscount URL").bold()
+                        
                     }
-                    Button("Cancel"){
-                        self.presentation.wrappedValue.dismiss()
+                    TextField(text: $originalSettings.token) {
+                        Text("API Token").bold().padding(EdgeInsets(top: 0, leading: 44, bottom: 0, trailing: 0))
                     }
-                }.frame(maxWidth: .infinity, alignment: .trailing)
+                    
+                    
+                    HStack {
+                        Picker(selection: $originalSettings.units, label: Text("Units:").bold()) {
+                            Text("mg/dL").tag(GlucoseViewerSettings.Units.mgdL)
+                            Text("mmol/L").tag(GlucoseViewerSettings.Units.mmolL)
+                        }.pickerStyle(.radioGroup).horizontalRadioGroupLayout()
+                        Spacer()
+                        
+                        Picker(selection: $originalSettings.axisStyle, label: Text("Axis Style:").bold() ) {
+                            Text("Dynamic").tag(GlucoseViewerSettings.AxisStyle.dynamic)
+                            Text("Fixed").tag(GlucoseViewerSettings.AxisStyle.fixed)
+                        }.pickerStyle(.radioGroup).horizontalRadioGroupLayout().frame(alignment: .trailing)
+                    }.frame(maxWidth: .infinity,alignment:.center)
+                    HStack {
+                        Button("Save") {
+                            //since self.settings is a bound appstorage property
+                            //any updates to it will get saved automatically
+                            self.settings = self.originalSettings
+                            self.presentation.wrappedValue.dismiss()
+                        }
+                        Button("Cancel"){
+                            self.presentation.wrappedValue.dismiss()
+                        }
+                    }.frame(maxWidth: .infinity, alignment: .trailing)
+                }.frame(maxWidth: .infinity).textFieldStyle(.roundedBorder)
             }.frame(width: 500).padding(5)
         }.padding(10)
     }

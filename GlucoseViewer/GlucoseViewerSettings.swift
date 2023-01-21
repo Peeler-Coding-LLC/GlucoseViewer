@@ -11,6 +11,8 @@ import Foundation
 /// Holds the settings for the app. Can be stored directly in application storage.
 struct GlucoseViewerSettings {
     
+    
+    
     /// Glucose units. mg/dL or mmol/L
     enum Units:String {
         case mgdL
@@ -43,6 +45,16 @@ struct GlucoseViewerSettings {
         self.units = .mgdL
         self.axisStyle = .dynamic
     }
+    
+     init(url: String = "", token: String = "", units: GlucoseViewerSettings.Units = .mgdL, axisStyle: GlucoseViewerSettings.AxisStyle = .dynamic) {
+        self.url = url
+        self.token = token
+        self.units = units
+        self.axisStyle = axisStyle
+    }
+    
+
+  
 }
 
 extension GlucoseViewerSettings : Codable {
