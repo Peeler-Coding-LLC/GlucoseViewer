@@ -9,39 +9,8 @@
 import SwiftUI
 import Charts
 
-struct AxisValues {
-    var values: [Double]
-    
-    init(with values: BGData, using settings: GlucoseViewerSettings){
-        self.values = []
-        switch settings.axisStyle {
-        case .fixed:
-            switch settings.units {
-            case .mgdL:
-                self.values = stride(from: 50, to:300,by: 25).map {Double($0)}
-            case .mmolL:
-                self.values = stride(from: 2.8, to:16.6,by: 0.60).map {$0}
-            }
-        case .dynamic:
-            switch settings.units {
-            case .mgdL:
-                self.values = stride(from: values.minBG.int-10, to:values.maxBG.int+20,by: 10).map {Double($0)}
-            case .mmolL:
-                self.values = stride(from: values.minBG.double-1.0, to:values.maxBG.double+1.5,by: 0.5).map {$0}
-            }
-        }
-        
-        self.values.sort()
-        
-        
-    }
-    
-}
-
 struct GlucoseDetailsView: View {
     @Environment(\.openURL) private  var opener
-    //    @Binding var baseUrl: String
-    //    @Binding var token: String
     @Binding var settings:GlucoseViewerSettings
     @ObservedObject var bgData: BGData;
     @State private var action: Int? = 1
@@ -51,7 +20,7 @@ struct GlucoseDetailsView: View {
         
         VStack {
             if(bgData.hasData){
-                let yAxisValues = AxisValues(with: bgData, using: settings)
+                let yAxisValues = getYAxisValues()
                 GroupBox ( "Glucose") {
                     
                     Chart (bgData.bgs.reversed()) {
@@ -60,16 +29,16 @@ struct GlucoseDetailsView: View {
                             y: .value("Glucose", $0.glucose.double)
                         ).symbol(.circle).alignsMarkStylesWithPlotArea()
                     }.chartYAxis{
-                        AxisMarks(values: yAxisValues.values)
-                    }.chartYScale(domain: ClosedRange(uncheckedBounds: (
-                        lower: yAxisValues.values.min()!,
-                        upper: yAxisValues.values.max()!)))
-                    .frame(minWidth: 700)
-                    
-                    
-                    
-                }
-            }
+                        AxisMarks(values: yAxisValues)
+                    }.chartYScale(domain:
+                                    ClosedRange(uncheckedBounds: (
+                                        lower: yAxisValues.min()!,
+                                        upper: yAxisValues.max()!
+                                    ) //end uncheckedBounds
+                                    ) //end ClosedRange
+                    ).frame(minWidth: 700) //end chart
+                } //end groupbox
+            } // end if
             HStack(alignment: .bottom) {
                 Button("Settings"){
                     showModal = true
@@ -78,15 +47,17 @@ struct GlucoseDetailsView: View {
                 Button("Open Nightscout"){
                     self.openURL(self.settings.url)
                 }.scaledToFill()
+                
                 Button("Quit"){
                     NSApplication.shared.terminate(nil)
                 }.scaledToFill()
-            }.padding()
+                
+            }.padding() // end hstack
         }.frame(maxWidth: .infinity,maxHeight: .infinity).opacity(100)
             .sheet(isPresented: $showModal,onDismiss:{
                 print(settings.url)
             }
-            ){
+            ) {
                 SettingsView(settings: $settings)
             }.opacity(0.99)
         
@@ -101,6 +72,31 @@ struct GlucoseDetailsView: View {
     
     func openURL(_ url:URL){
         opener(url)
+    }
+    
+    func getYAxisValues() -> [Double]{
+        var values: [Double] = []
+        switch settings.axisStyle {
+        case .fixed:
+            switch settings.units {
+            case .mgdL:
+                values = stride(from: 50, to:300,by: 25).map {Double($0)}
+            case .mmolL:
+                values = stride(from: 2.8, to:16.6,by: 0.60).map {$0}
+            }
+        case .dynamic:
+            switch settings.units {
+            case .mgdL:
+                values = stride(from: bgData.minBG.int-10, to:bgData.maxBG.int+20,by: 10).map {Double($0)}
+            case .mmolL:
+                values = stride(from: bgData.minBG.double-1.0, to:bgData.maxBG.double+1.5,by: 0.5).map {$0}
+            }
+        }
+        
+        values.sort()
+        
+        return values
+        
     }
     
 }

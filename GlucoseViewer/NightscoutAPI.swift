@@ -17,13 +17,17 @@ struct APIStatus : Codable {
 
 struct StringableNumber: Codable,ExpressibleByFloatLiteral,ExpressibleByIntegerLiteral,ExpressibleByStringLiteral,Comparable {
     
+    var string: String
+    var int: Int
+    var double: Double
+    
+    /* Comparable */
+    
     static func < (lhs: StringableNumber, rhs: StringableNumber) -> Bool {
         return lhs.double < rhs.double
     }
     
-    var string: String
-    var int: Int
-    var double: Double
+    /* ExxpressByFloatLiteral */
     
     init(floatLiteral value: Double){
         self.string = String(value)
@@ -31,19 +35,24 @@ struct StringableNumber: Codable,ExpressibleByFloatLiteral,ExpressibleByIntegerL
         self.double = value
     }
     
+    /* ExpressByIntegerLiteral */
+    
     init(integerLiteral value: Int){
         self.string = String(value)
         self.int = value
         self.double = Double(value)
     }
    
+    /* ExpressByStringLiteral */
+    
     init(stringLiteral value: String){
         self.string = value
         self.int = Int(value) ?? 0
         self.double = Double(value) ?? 0.0
     }
     
-    // Where we determine what type the value is
+    /* Codable*/
+    
     init(from decoder: Decoder) throws {
         let container =  try decoder.singleValueContainer()
         self.double = 0.0

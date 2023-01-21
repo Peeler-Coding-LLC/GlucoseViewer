@@ -20,11 +20,7 @@ final class NightscoutAPITests: XCTestCase {
     }
 
     func testEmptyUrl() async throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        
         let data = Data()
         let response = URLResponse()
         
@@ -41,11 +37,7 @@ final class NightscoutAPITests: XCTestCase {
     }
     
     func testInvalidUrl() async throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        
         let data = Data()
         let response = URLResponse()
         
@@ -63,11 +55,7 @@ final class NightscoutAPITests: XCTestCase {
     }
 
     func testFailedRequest() async throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        
         let data = Data()
         
         let response = HTTPURLResponse(url: URL(string: "http://www.example.com")!, statusCode: 404, httpVersion: nil, headerFields: nil)
@@ -85,11 +73,7 @@ final class NightscoutAPITests: XCTestCase {
     }
     
     func testFailedDecode() async throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        
         let data = loadJsonData(file: "invalidjson")!
         
         let response = HTTPURLResponse(url: URL(string: "http://www.example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -107,11 +91,6 @@ final class NightscoutAPITests: XCTestCase {
     }
     
     func testSuccess() async throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
         let data = loadJsonData(file: "validjson")!
         
         let response = HTTPURLResponse(url: URL(string: "http://www.example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -136,6 +115,25 @@ final class NightscoutAPITests: XCTestCase {
         wait(for: [e], timeout: 3)
     }
     
+    /// Test for issue [#8](https://github.com/chasepeeler/GlucoseViewer/issues/8)
+    func testStringDeltaValue() async throws {
+        let data = loadJsonData(file: "stringdelta")!
+        
+        let response = HTTPURLResponse(url: URL(string: "http://www.example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+            
+        let session = MockURLSession(mockData: data, mockResponse: response!)
+        let api = NightscoutAPI(session: session)
+        let e = expectation(description: "Valid")
+        do {
+           let r = try await api.loadData("http://example.com")
+            XCTAssertEqual(r.bgs[0].bgdelta?.string, "-0.8")
+            e.fulfill()
+        } catch {
+            
+        }
+        
+        wait(for: [e], timeout: 3)
+    }
     
     private func loadJsonData(file: String) -> Data? {
         //1

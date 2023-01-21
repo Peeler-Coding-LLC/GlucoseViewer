@@ -26,8 +26,8 @@ final class GlucoseViewerTests: XCTestCase {
         // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
         
-        var bgl = BGLabel(glucose: 100, direction: BGDirection.Flat, delta: -2, status: BGLabel.Status.Ok)
-        var arrow = bgl.directionArrow
+        let bgl = BGLabel(glucose: 100, direction: BGDirection.Flat, delta: -2, status: BGLabel.Status.Ok)
+        let arrow = bgl.directionArrow
         XCTAssertEqual(arrow, "→")
         
         
