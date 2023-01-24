@@ -47,7 +47,6 @@ struct GlucoseViewerApp: App {
     ///  triggers API call and loads data
     func loadData() async {
         
-        
         var interval = 15.0
         do {
             let r = try await api.loadData(self.settings.url,token: self.settings.token)
@@ -57,6 +56,23 @@ struct GlucoseViewerApp: App {
             self.bgs.replace(with: r.bgs)
             self.bg.status = .Ok
             interval = 5.0*60.0
+            
+            let now = Date()
+            var d = r.bgs[0].datetime
+            if(d > 9999999999.0){
+                d = d/1000.0
+            }
+            let nextRefesh = Date(timeIntervalSince1970: d+interval)
+            let checkRefresh = Date(timeIntervalSince1970: d+interval+interval)
+            if(now >= checkRefresh){
+                self.bg.status = .Old
+            } else if(now < nextRefesh){
+                interval = nextRefesh.timeIntervalSinceNow //add an extra 20 seconds to give us a buffer
+            } else {
+                interval = 15
+            }
+            print("\(now.prettyPrint()) \(nextRefesh.prettyPrint()) \(checkRefresh.prettyPrint())")
+            print("Next refresh in \(interval) seconds")
         } catch APIError.EmptyUrl {
             self.bg.status = .NoUrl
         } catch APIError.InvalidUrl(let url){
@@ -68,17 +84,31 @@ struct GlucoseViewerApp: App {
         } catch {
             print("Unknown error: \(error)")
         }
-        Timer.scheduledTimer(withTimeInterval: interval, repeats: false){timer in
+        
+        Timer.scheduledTimer(withTimeInterval: interval , repeats: false){timer in
             Task {
                 await loadData()
             }
         }
+       
     }
+    
+   
     
 }
 
 
-
+extension Date {
+    
+    func prettyPrint() -> String {
+        let formatter1:DateFormatter = DateFormatter();
+        formatter1.pmSymbol = ""
+        formatter1.amSymbol = ""
+        formatter1.dateStyle = .short
+        formatter1.timeStyle = .long
+        return formatter1.string(from: self)
+    }
+}
 
 
 

@@ -26,7 +26,12 @@ struct BGLabel {
     
     var signedDelta : String {
         get {
-            return (delta.double < 0.0 ? "" : "+")+delta.string
+            switch(self.status){
+            case .Old:
+                return "OLD"
+            default:
+                return (delta.double < 0.0 ? "" : "+")+delta.string
+            }
         }
     }
     
@@ -55,6 +60,7 @@ struct BGLabel {
         case NoUrl
         case Error
         case Ok
+        case Old
     }
     
 }
