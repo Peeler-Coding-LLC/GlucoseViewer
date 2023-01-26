@@ -14,6 +14,7 @@ struct SettingsView: View {
     
     @Binding var settings :GlucoseViewerSettings
     @State var originalSettings:GlucoseViewerSettings
+    @State var showToken = false
     let userDefaults = UserDefaults.standard
     
 
@@ -32,11 +33,7 @@ struct SettingsView: View {
                         Text("Nightscount URL").bold()
                         
                     }
-                    TextField(text: $originalSettings.token) {
-                        Text("API Token").bold().padding(EdgeInsets(top: 0, leading: 44, bottom: 0, trailing: 0))
-                    }
-                    
-                    
+                    PasswordField(value: $originalSettings.token)
                     HStack {
                         Picker(selection: $originalSettings.units, label: Text("Units:").bold()) {
                             Text("mg/dL").tag(GlucoseViewerSettings.Units.mgdL)
@@ -64,7 +61,37 @@ struct SettingsView: View {
             }.frame(width: 500).padding(5)
         }.padding(10)
     }
+    
+    struct PasswordField : View {
+        @Binding var value : String
+        @State var showToken: Bool = false
+        
+        var body : some View {
+            if(showToken){
+                ZStack(alignment: .trailing) {
+                    TextField(text: $value) {
+                        Text("API Token").bold().padding(EdgeInsets(top: 0, leading: 44, bottom: 0, trailing: 0))
+                     }
+                    Image(systemName: "eye").onTapGesture {
+                        showToken.toggle()
+                    }.padding(.trailing,5)
+                }
+            } else {
+                ZStack(alignment: .trailing) {
+                    SecureField(text: $value) {
+                        Text("API Token").bold().padding(EdgeInsets(top: 0, leading: 44, bottom: 0, trailing: 0))
+                     }
+                    Image(systemName: "eye.slash").onTapGesture {
+                        showToken.toggle()
+                    }.padding(.trailing,5)
+                }
+            }
+        }
+        
+    }
 }
+
+
 
 struct EnterUrlView_Previews: PreviewProvider {
     @State static var settings = GlucoseViewerSettings()
