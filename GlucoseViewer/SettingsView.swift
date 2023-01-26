@@ -75,7 +75,6 @@ struct ApiTokenField : View {
     @State var showToken: Bool = false
     
     var body : some View {
-        
         ZStack(alignment: .trailing) {
             if(showToken){
                 TextField(text: $value){
