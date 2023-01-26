@@ -17,7 +17,7 @@ struct SettingsView: View {
     @State var showToken = false
     let userDefaults = UserDefaults.standard
     
-
+    
     
     init(settings:Binding<GlucoseViewerSettings>){
         self._settings = settings
@@ -33,7 +33,7 @@ struct SettingsView: View {
                         Text("Nightscount URL").bold()
                         
                     }
-                    PasswordField(value: $originalSettings.token)
+                    ApiTokenField(value: $originalSettings.token)
                     HStack {
                         Picker(selection: $originalSettings.units, label: Text("Units:").bold()) {
                             Text("mg/dL").tag(GlucoseViewerSettings.Units.mgdL)
@@ -62,36 +62,40 @@ struct SettingsView: View {
         }.padding(10)
     }
     
-    struct PasswordField : View {
-        @Binding var value : String
-        @State var showToken: Bool = false
-        
-        var body : some View {
-            if(showToken){
-                ZStack(alignment: .trailing) {
-                    TextField(text: $value) {
-                        Text("API Token").bold().padding(EdgeInsets(top: 0, leading: 44, bottom: 0, trailing: 0))
-                     }
-                    Image(systemName: "eye").onTapGesture {
-                        showToken.toggle()
-                    }.padding(.trailing,5)
-                }
-            } else {
-                ZStack(alignment: .trailing) {
-                    SecureField(text: $value) {
-                        Text("API Token").bold().padding(EdgeInsets(top: 0, leading: 44, bottom: 0, trailing: 0))
-                     }
-                    Image(systemName: "eye.slash").onTapGesture {
-                        showToken.toggle()
-                    }.padding(.trailing,5)
-                }
-            }
-        }
-        
+}
+
+struct ApiTokenFieldLabel : View {
+    var body:some View {
+        Text("API Token").bold().padding(EdgeInsets(top: 0, leading: 44, bottom: 0, trailing: 0))
     }
 }
 
-
+struct ApiTokenField : View {
+    @Binding var value : String
+    @State var showToken: Bool = false
+    
+    var body : some View {
+        
+        ZStack(alignment: .trailing) {
+            if(showToken){
+                TextField(text: $value){
+                    ApiTokenFieldLabel()
+                }
+            } else {
+                SecureField(text: $value){
+                    ApiTokenFieldLabel()
+                }
+            }
+            Button(action: {
+                showToken.toggle()
+            }, label: {
+                Image(systemName: showToken ? "eye" : "eye.slash")
+            }).padding(.trailing, 7).buttonStyle(.plain)
+        }
+        
+    }
+    
+}
 
 struct EnterUrlView_Previews: PreviewProvider {
     @State static var settings = GlucoseViewerSettings()
