@@ -50,7 +50,7 @@ struct GlucoseViewerApp: App {
         
         var interval = 15.0
         do {
-            let r = try await api.loadData(self.settings.url,token: self.settings.token)
+            let r = try await api.loadData(self.settings)
             self.bg.direction = BGDirection(rawValue: r.bgs[0].direction)!
             self.bg.glucose = r.bgs[0].sgv
             self.bg.delta = r.bgs[0].bgdelta!

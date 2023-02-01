@@ -112,23 +112,26 @@ struct NightscoutAPI{
         self.session = session
     }
     
-    func loadData(_ baseUrl:String,token: String = "") async throws -> APIData {
+    func loadData(_ settings:GlucoseViewerSettings) async throws -> APIData {
         
-        if(baseUrl.isEmpty){
+        if(settings.url.isEmpty){
             throw APIError.EmptyUrl
         }
         
-        var urlString = baseUrl
+        var urlString = settings.url
         
         if(urlString.last != "/"){
             urlString += "/"
         }
         
         urlString += "pebble?count=20"
-        if(!token.isEmpty){
-            urlString += "&token="+token
+        if(!settings.token.isEmpty){
+            urlString += "&token="+settings.token
         }
         
+        if(settings.units == .mmolL){
+            urlString += "&units=mmol"
+        }
         guard let url = URL(string: urlString) else {
             throw APIError.InvalidUrl(url: urlString)
         }
